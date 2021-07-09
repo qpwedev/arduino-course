@@ -94,15 +94,18 @@ class Display {
   }
 
   void gen_and_display() {
-    int num;
-    int aux_num;
+    int num = 0;
+    int aux_num = 0;
 
-    for (int i = 0; i < from_dice_to_num(); ++i) {
+    // for 2d4 Counter({5: 766, 4: 581, 6: 553, 3: 360, 7: 339, 2: 194, 8: 174})
+
+    for (int i = 0; i < throws; ++i) {
       do {
-        aux_num = millis() * random(333, 3333) % (from_dice_to_num()) + 1;
+        aux_num = millis() * random(100, 1000) % (from_dice_to_num() + 1);
       } while (aux_num < 1 || aux_num > from_dice_to_num());
       num += aux_num;
     }
+
     char str[4] = {'-', '-', '-', '-'};
     change_number_frame(blank_frame);
     sprintf(str, "%d", num);
@@ -111,6 +114,7 @@ class Display {
     for (int i = 3 - n; i <= 3; ++i) {
       number_frame[i] = str[counter++];
     }
+    num = 0;
   }
 
   void display_char(char ch, byte pos) {
